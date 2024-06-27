@@ -17,6 +17,8 @@
 #define _XTAL_FREQ 4000000
 
  void main(void) {
+    // config of ccp module
+    CMCON = 0b11000010;
     
     // clear ports
     PORTA = 0b00000000;
