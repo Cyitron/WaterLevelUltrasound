@@ -14,36 +14,32 @@
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
 
 #include <xc.h>
+#include <pic16f877a.h>
 #define _XTAL_FREQ 4000000
 
+float dist_init = 0;
+
  void main(void) {
-    // config of ccp module
-    CMCON = 0b11000010;
-    
     // clear ports
-    PORTA = 0b00000000;
     PORTB = 0b00000000;
-    PORTC = 0b00000000;
     
     // set outputs and inputs
-    TRISB = 0b00010010;
-    TRISA = 0b00001111;
-    TRISC = 0b00000000;
+    TRISB = 0b00001001; //1 input 0 output
+    
     while(1){
-    //PORTBbits.RB0 = 1;
-    //__delay_ms(1000);
-    //PORTBbits.RB0 = 0;
-    //__delay_ms(1000);
-     PORTB++;
-    __delay_ms(500);
+        
+        TRISBbits.TRISB2 = 1;  //TRIG1
+        TRISBbits.TRISB5 = 1;//TRIG2
+        
+        __delay_us(10);
+        TRISBbits.TRISB1 = 1; //ECHO1
+        TRISBbits.TRISB2 = 0;  //TRIG1
+        TRISBbits.TRISB4 = 1; //ECHO2
+        TRISBbits.TRISB5 = 0;//TRIG2
     }
  }
  
  /*
-  RA0,RA3 = CCP1 INPUT
-  RA1,RA2 = CCP2 INPUT
-  RC1 = CCP1 OUTPUT
-  RC2 = CCP2 OUTPUT
   RB1 = ECHO1
   RB2 = TRIG1
   RB4 = ECHO2
